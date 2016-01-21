@@ -1,0 +1,17 @@
+canvas {
+    border: 2px solid black;
+    margin: 100px auto;
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+
+#canvas-background {
+    z-index: 1;
+}
+
+#canvas-main {
+    z-index: 2;
+    background: url("grass.jpg") no-repeat;
+    background-size: cover;
+}
