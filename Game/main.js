@@ -8,35 +8,19 @@ background.onload = function () {
 	ctx.drawImage(background, 0, 0);
 };
 
+var input = new Input();
+attachListeners(input);
+
 var balls = [
 	new Ball(new Circle(10, 250, 6), 'blue'),
-	new Ball(new Circle(100, 150, 15), 'red'),
+	new Ball(new Circle(500, 150, 15), 'red'),
 	new Ball(new Circle(100, 100, 30), 'pink'),
 	new Ball(new Circle(100, 50, 45), 'gold')
 ];
 
-//function rectCircleColliding(circle, rect) {
-//    var distX = Math.abs(circle.x - rect.x - rect.width / 2);
-//    var distY = Math.abs(circle.y - rect.y - rect.height / 2);
-//
-//    if (distX > (rect.width / 2 + circle.radius)) {
-//        return false;
-//    }
-//    if (distY > (rect.height / 2 + circle.radius)) {
-//        return false;
-//    }
-//
-//    if (distX <= (rect.width / 2)) {
-//        return true;
-//    }
-//    if (distY <= (rect.height / 2)) {
-//        return true;
-//    }
-//
-//    var dx = distX - rect.width / 2;
-//    var dy = distY - rect.height / 2;
-//    return (dx * dx + dy * dy <= (circle.radius * circle.radius));
-//}
+var rectangles = [];
+
+var player = player = new Player(canvas.width / 2, canvas.height - 33);
 
 function checkForCanvasColide(ball) {
 	if (ball.y > canvas.height - ball.radius || ball.y < ball.radius) {
@@ -49,9 +33,32 @@ function checkForCanvasColide(ball) {
 
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	var playerBox = player.getCurrentBoundingBox();
+	ctx.strokeRect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
+
+	balls.forEach(function (ball) {
+		ball.draw(ctx);
+
+		//draw boxes around balls and player
+		var ballCircle = ball.getCurrentCircle();
+		ctx.arc(ballCircle.x, ballCircle.y, ballCircle.radius, 0, 0, true);
+		ctx.stroke();
+		//
+	});
+
+	rectangles.forEach(function (rectangle) {
+		rectangle.draw()
+	});
+
+	tick();
+	player.render(ctx);
+	window.requestAnimationFrame(draw);
+}
+
+function tick() {
 	balls.forEach(function (ball) {
 		checkForCanvasColide(ball);
-		ball.draw(ctx);
 
 		ball.x += ball.vx;
 		ball.y += ball.vy;
@@ -61,5 +68,49 @@ function draw() {
 		}
 	});
 
-	raf = window.requestAnimationFrame(draw);
+	if (input.space) {
+		createHook(player.position.x + player.width / 2);
+	}
+
+	player.movement.right = !!input.right;
+	player.movement.left = !!input.left;
+
+	var playerBox = player.getCurrentBoundingBox();
+	balls.forEach(function (ball) {
+		var ballCircle = ball.getCurrentCircle();
+		if (circleRectangleCollision(ballCircle, playerBox)) {
+			console.log("Player collides with the " + ball.color + " ball");
+		}
+	});
+
+	player.updateAnimationSettings();
 }
+
+function createHook(x) {
+	if (rectangles.length === 0) {
+		rectangles.push(new rectangle(x));
+	}
+}
+
+//function update() {
+//	this.tick();
+//	this.render(ctx);
+//	requestAnimationFrame(update);
+//}
+
+//function changeDirection(ball, rect) {
+//    if (ball.y + ball.radius === rect.y || ball.y - ball.radius === rect.y + rect.height) {
+//        ball.vy *= -1;
+//    } else if (ball.x + ball.radius === rect.x || ball.x - ball.radius === rect.x + rect.width) {
+//        ball.vx *= -1;
+//    } else {
+//        if (ball.y >= rect.y && ball.y <= rect.y + rect.height) {
+//            ball.vx *= -1;
+//        } else if (ball.x >= rect.x && ball.x <= rect.x + rect.width) {
+//            ball.vy *= -1;
+//        } else {
+//            ball.vy *= -1;
+//            ball.vx *= -1;
+//        }
+//    }
+//}
