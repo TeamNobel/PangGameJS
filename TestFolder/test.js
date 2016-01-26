@@ -15,7 +15,7 @@ function update() {
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.render(ctx);
+    player.draw(ctx);
 }
 
 function tick() {
