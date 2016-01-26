@@ -27,3 +27,12 @@ function circleCircleCollision(circle1, circle2) {
 		Math.pow((circle1.y - circle2.y), 2) <=
 		Math.pow((circle1.radius + circle2.radius), 2)
 }
+
+function rectangleRectangleCollision(rect1, rect2) {
+	//return !(r1.x + r1.width < r2.x || r1.y + r1.height < r2.y || r1.x > r2.x + r2.width || r1.y > r2.y + r2.height);
+
+	return !(rect1.x + rect1.width < rect2.x ||
+	rect1.y + rect1.height < rect2.y ||
+	rect1.x > rect2.x + rect2.width ||
+	rect1.y > rect2.y + rect2.height);
+}

@@ -18,6 +18,8 @@ var balls = [
 	new Ball(new Circle(100, 50, 45), 'gold')
 ];
 
+var testRectangle = new Rectangle(200,200,100,100);
+
 var rectangles = [];
 
 var player = player = new Player(canvas.width / 2, canvas.height - 33);
@@ -36,6 +38,8 @@ function draw() {
 
 	var playerBox = player.getCurrentBoundingBox();
 	ctx.strokeRect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
+
+	ctx.strokeRect(testRectangle.x, testRectangle.y, testRectangle.width, testRectangle.height);
 
 	balls.forEach(function (ball) {
 		ball.draw(ctx);
@@ -68,6 +72,7 @@ function tick() {
 		}
 	});
 
+
 	if (input.space) {
 		createHook(player.position.x + player.width / 2);
 	}
@@ -82,6 +87,11 @@ function tick() {
 			console.log("Player collides with the " + ball.color + " ball");
 		}
 	});
+
+
+	if(rectangleRectangleCollision(playerBox, testRectangle)){
+		console.log("Player collides with rectangle.");
+	}
 
 	player.updateAnimationSettings();
 }
