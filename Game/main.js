@@ -8,6 +8,8 @@ background.onload = function () {
 	ctx.drawImage(background, 0, 0);
 };
 
+var addedHook = false;
+
 var input = new Input();
 attachListeners(input);
 
@@ -21,6 +23,8 @@ var balls = [
 var rectangles = [];
 
 var player = player = new Player(canvas.width / 2, canvas.height - 33);
+
+var bonuses = [ new Bonus(5, 5, 1) ];
 
 function checkForCanvasColide(ball) {
 	if (ball.y > canvas.height - ball.radius || ball.y < ball.radius) {
@@ -46,9 +50,13 @@ function draw() {
 		ctx.stroke();
 		//
 	});
-
+    
 	rectangles.forEach(function (rectangle) {
 		rectangle.draw()
+	});
+
+	bonuses.forEach(function (bonus) {
+	    bonus.draw(ctx);
 	});
 
 	tick();
@@ -57,7 +65,7 @@ function draw() {
 }
 
 function tick() {
-	balls.forEach(function (ball) {
+    balls.forEach(function (ball) {
 		checkForCanvasColide(ball);
 
 		ball.x += ball.vx;
@@ -69,7 +77,7 @@ function tick() {
 	});
 
 	if (input.space) {
-		createHook(player.position.x + player.width / 2);
+	    createHook(player.position.x + player.width / 2);
 	}
 
 	player.movement.right = !!input.right;
@@ -81,14 +89,40 @@ function tick() {
 		if (circleRectangleCollision(ballCircle, playerBox)) {
 			console.log("Player collides with the " + ball.color + " ball");
 		}
+
+        // check for collision with hooks
+		rectangles.forEach(function (r) {
+		    if (circleRectangleCollision(ballCircle, r)) {
+		        if (ballCircle.radius > 11) {
+		            balls.push(new Ball(new Circle(100, 50, ballCircle.radius / 2), ball.color));
+		            balls.push(new Ball(new Circle(100, 50, ballCircle.radius / 2), ball.color));
+		        }
+
+		        balls.removeAt(ball);
+		        //rectangles.removeAt(r);
+		        r.destroy = true;
+		    }
+		});
+	});
+    
+	player.updateAnimationSettings();
+
+    // revome hooks that hit a ball or are outside the canvas
+	rectangles = rectangles.filter(function (r) {
+	    return !r.destroy;
 	});
 
-	player.updateAnimationSettings();
+    // update bonuses
+	bonuses = bonuses.filter(function (b) { return !b.destroy; });
+	bonuses.forEach(function (bonus) {
+	    bonus.update();
+	});
 }
 
 function createHook(x) {
 	if (rectangles.length === 0) {
-		rectangles.push(new Hook(x));
+	    rectangles.push(new Hook(x));
+	    console.log("added hook");
 	}
 }
 
