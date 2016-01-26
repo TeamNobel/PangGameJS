@@ -7,7 +7,7 @@ background.onload = function () {
     ctx.drawImage(background, 0, 0);
 };
 
-//var rectangles = [];
+var rectangles = [];
 var balls = [
     new ball(10, 250, 6, 'blue'),
     new ball(100, 150, 15, 'red'),
@@ -31,6 +31,7 @@ function checkForCanvasColide(ball) {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    rectangles.forEach(function(rectangle){rectangle.draw()});
     balls.forEach(function (ball) {
         checkForCanvasColide(ball);
         ball.draw();
@@ -52,6 +53,9 @@ function draw() {
 function tick() {
     player.movement.right = !!input.right;
     player.movement.left = !!input.left;
+    if (input.space){
+        createHook(player.position.x + player.width/2);
+    }
 
     player.updateAnimationSettings();
 }
@@ -60,6 +64,12 @@ function update() {
     this.tick();
     this.render(ctx);
     requestAnimationFrame(update);
+}
+
+function createHook(x){
+    if (rectangles.length===0){
+        rectangles.push(new rectangle(x));
+    }
 }
 
     //
