@@ -1,11 +1,11 @@
 function circleRectangleCollision(circle, rectangle) {
-	var circleDistanceX = abs(circle.x - rect.x);
-	var circleDistanceY = abs(circle.y - rect.y);
+	var circleDistanceX = Math.abs(circle.x - rectangle.x);
+	var circleDistanceY = Math.abs(circle.y - rectangle.y);
 
-	if (circleDistanceX > (rectangle.width / 2 + circle.r)) {
+	if (circleDistanceX > (rectangle.width / 2 + circle.radius)) {
 		return false;
 	}
-	if (circleDistanceY > (rectangle.height / 2 + circle.r)) {
+	if (circleDistanceY > (rectangle.height / 2 + circle.radius)) {
 		return false;
 	}
 
@@ -19,7 +19,7 @@ function circleRectangleCollision(circle, rectangle) {
 	var cornerDistance_sq = Math.pow((circleDistanceX - rectangle.width / 2), 2) +
 		Math.pow((circleDistanceY - rectangle.height / 2), 2);
 
-	return (cornerDistance_sq <= Math.pow(circle.r, 2));
+	return (cornerDistance_sq <= Math.pow(circle.radius, 2));
 }
 
 function circleCircleCollision(circle1, circle2) {
