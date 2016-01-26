@@ -88,7 +88,7 @@ function tick() {
 
 function createHook(x) {
 	if (rectangles.length === 0) {
-		rectangles.push(new rectangle(x));
+		rectangles.push(new Hook(x));
 	}
 }
 
