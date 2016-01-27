@@ -11,8 +11,8 @@ var Hook = function (x) {
 		ctx.fill();
 		ctx.closePath();
 
-		this.y -= 2;
-		this.height += 2;
+		this.y -= 4;
+		this.height += 4;
 
 		this.destroy = (this.y < 0);
 	}
