@@ -181,7 +181,7 @@ function tick() {
 function updateBallPosition(ball) {
 	ball.x += ball.vx;
 	ball.y += ball.vy;
-	ball.vy += 0.1;
+	ball.vy += 0.07;
 }
 
 function createHook(x) {
@@ -199,8 +199,8 @@ function ballResponse(index) {
 	var color = balls[index].color;
 	switch (color) {
 		case 'gold':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'pink', 6));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'pink', 6));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'pink', 5.5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'pink', 5.5));
 			balls[balls.length - 1].vx *= -1;
 			balls.removeAt(index);
 			break;
