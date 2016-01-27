@@ -27,15 +27,13 @@ h1{
 
 h2{
     text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 section{
     display: inline-block;
     text-align: justify;
-}
-
-#left{
-    float: left;
 }
 
 #right{
@@ -44,7 +42,10 @@ section{
 
 #menu{
     width: 400px;
-    margin: 0 auto;
+    margin: 30px auto;
+    padding: 5px;
+    border: 1px solid black;
+    box-shadow: 10px 10px 5px #888888;
 }
 
 #wrapper{

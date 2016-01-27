@@ -8,17 +8,15 @@ var startBalls = function () {
 	return [new Ball(new Circle(100, 50, 45), 'gold', 6)];
 };
 var balls = startBalls();
-var hooks = [];
-var bonuses = [];
-var player = new Player(canvas.width / 2, canvas.height - 33);
-var sound = new Audio('sounds/pop.wav');
-var backgroundSound = new Audio('sounds/background-blade.mp3');
-
-var isRunning = false;
-
-var ballsMovementPauseTime = 0;
-var playerBallCollisionPauseTime = 0;
-var hooksMaxCount = 1;
+    hooks = [],
+    bonuses = [],
+    player = new Player(canvas.width / 2, canvas.height - 33),
+    sound = new Audio('sounds/pop.wav'),
+    backgroundSound = new Audio('sounds/background-blade.mp3'),
+    isRunning = false,
+    ballsMovementPauseTime = 0,
+    playerBallCollisionPauseTime = 0,
+    hooksMaxCount = 1;
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max) + 1;
@@ -192,12 +190,12 @@ function ballResponse(index) {
 	var color = balls[index].color;
 	switch (color) {
 		case 'gold':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'pink', 5.5));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'pink', 5.5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'purple', 5.5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 30), 'purple', 5.5));
 			balls[balls.length - 1].vx *= -1;
 			balls.removeAt(index);
 			break;
-		case 'pink':
+		case 'purple':
 			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 15), 'red', 5));
 			balls.push(new Ball(new Circle(balls[index].x, balls[index].y, 15), 'red', 5));
 			balls[balls.length - 1].vx *= -1;
