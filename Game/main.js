@@ -1,19 +1,21 @@
 var canvas = document.getElementById('canvas-main');
 var ctx = canvas.getContext('2d');
 var background = new Image();
-	background.src = 'grass.jpg';
+background.src = 'grass.jpg';
 background.onload = function () {
 	ctx.drawImage(background, 0, 0);
 };
 var addedHook = false;
 var input = new Input();
-	attachListeners(input);
+attachListeners(input);
 
 var balls = [new Ball(new Circle(100, 50, 45), 'gold', 6)];
 var hooks = [];
 var bonuses = [];
 var player = new Player(canvas.width / 2, canvas.height - 33);
 var sound = new Audio('sounds/pop.wav');
+var backgroundSound = new Audio('sounds/background-blade.mp3');
+backgroundSound.play();
 var isRunning = true;
 
 
