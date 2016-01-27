@@ -1,27 +1,27 @@
 function circleRectangleCollision(circle, rectangle) {
 	var collisionPoints = {
-            // horizontal diameter
-            0: {x: circle.x - circle.radius, y: circle.y}, // left
-            1: {x: circle.x + circle.radius, y: circle.y}, // right
-            //vertical diameter
-            2: {x: circle.x, y: circle.y - circle.radius}, // top
-            3: {x: circle.x, y: circle.y + circle.radius}, // bottom
-            // inner diagonal points
-            4: {x: circle.x + circle.radius / 2, y: circle.y - circle.radius / 2}, // top right
-            5: {x: circle.x + circle.radius /2 , y: circle.y + circle.radius / 2}, // bottom right
-            6: {x: circle.x - circle.radius /2 , y: circle.y + circle.radius / 2}, // bottom left
-            7: {x: circle.x - circle.radius /2 , y: circle.y - circle.radius / 2}, // top left
-            // center
-            8: {x: circle.x, y: circle.y}
-        };
+		// horizontal diameter
+		0: {x: circle.x - circle.radius, y: circle.y}, // left
+		1: {x: circle.x + circle.radius, y: circle.y}, // right
+		//vertical diameter
+		2: {x: circle.x, y: circle.y - circle.radius}, // top
+		3: {x: circle.x, y: circle.y + circle.radius}, // bottom
+		// inner diagonal points
+		4: {x: circle.x + circle.radius / 2, y: circle.y - circle.radius / 2}, // top right
+		5: {x: circle.x + circle.radius / 2, y: circle.y + circle.radius / 2}, // bottom right
+		6: {x: circle.x - circle.radius / 2, y: circle.y + circle.radius / 2}, // bottom left
+		7: {x: circle.x - circle.radius / 2, y: circle.y - circle.radius / 2}, // top left
+		// center
+		8: {x: circle.x, y: circle.y}
+	};
 
-    for (var point in collisionPoints) {
-        if (PointInsideRectangle(collisionPoints[point], rectangle)) { 
-            return true;            
-        }
-    }
+	for (var point in collisionPoints) {
+		if (PointInsideRectangle(collisionPoints[point], rectangle)) {
+			return true;
+		}
+	}
 
-    return false;
+	return false;
 }
 
 function checkForCanvasCollision(ball) {
@@ -48,19 +48,18 @@ function rectangleRectangleCollision(rect1, rect2) {
 	rect1.y > rect2.y + rect2.height);
 }
 
-function ballHookCollision(ball, hook){
+function ballHookCollision(ball, hook) {
 	return !!(hook.x > ball.x - ball.radius && hook.x < ball.x + ball.radius && hook.y <= ball.y + ball.radius);
 }
 
 function PointInsideRectangle(point, rectangle) {
-        
-    if (point.x >= rectangle.x &&
-        point.x <= rectangle.x + rectangle.width &&
-        point.y >= rectangle.y &&
-        point.y <= rectangle.y + rectangle.height) {
+	if (point.x >= rectangle.x &&
+		point.x <= rectangle.x + rectangle.width &&
+		point.y >= rectangle.y &&
+		point.y <= rectangle.y + rectangle.height) {
 
-        return true;
-    }
+		return true;
+	}
 
-    return false;
+	return false;
 }

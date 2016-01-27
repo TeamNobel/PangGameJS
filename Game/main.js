@@ -19,55 +19,53 @@ var balls = startBalls();
     hooksMaxCount = 1;
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * max) + 1;
+	return Math.floor(Math.random() * max) + 1;
 }
 
 function resetGame() {
-    balls = startBalls();
-    bonuses = [];
+	balls = startBalls();
+	bonuses = [];
 }
 
 function tryToSpawnBonus(x, y) {
-    var rnd = getRandomInt(10);
-    if (rnd !== 1) {
-        return;
-    }
+	var rnd = getRandomInt(10);
+	if (rnd !== 1) {
+		return;
+	}
 
-    switch (getRandomInt(3)) {
-        case 1:
-            // add hook
-            bonuses.push(new Bonus(x, y, 1));
-            //console.log("x " + x + " y " + y);
-            break;
+	switch (getRandomInt(3)) {
+		case 1:
+			// add hook
+			bonuses.push(new Bonus(x, y, 1));
+			//console.log("x " + x + " y " + y);
+			break;
 
-        case 2:
-            // invincible for a time
-            bonuses.push(new Bonus(x, y, 2));
-            //console.log("x " + x + " y " + y);
-            break;
+		case 2:
+			// invincible for a time
+			bonuses.push(new Bonus(x, y, 2));
+			//console.log("x " + x + " y " + y);
+			break;
 
-        case 3:
-            // freeze time
-            bonuses.push(new Bonus(x, y, 3));
-            //console.log("x " + x + " y " + y);
-            break;
-    }
+		case 3:
+			// freeze time
+			bonuses.push(new Bonus(x, y, 3));
+			//console.log("x " + x + " y " + y);
+			break;
+	}
 }
 
 function updateBonuses() {
-    if (ballsMovementPauseTime > 0) {
-        ballsMovementPauseTime -= 1;
-    }
+	if (ballsMovementPauseTime > 0) {
+		ballsMovementPauseTime -= 1;
+	}
 
-    if (playerBallCollisionPauseTime > 0) {
-        playerBallCollisionPauseTime -= 1;
-    }
+	if (playerBallCollisionPauseTime > 0) {
+		playerBallCollisionPauseTime -= 1;
+	}
 }
 
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-	var playerBox = player.getCurrentBoundingBox();
 
 	balls.forEach(function (ball) {
 		ball.draw(ctx);
@@ -82,12 +80,13 @@ function draw() {
 	});
 
 	tick();
+
 	player.render(ctx);
 	DrawHUD();
 }
 
 function tick() {
-    updateBonuses();
+	updateBonuses();
 	var playerBox = player.getCurrentBoundingBox();
 
 	balls.forEach(function (ball) {
@@ -100,13 +99,15 @@ function tick() {
 		var ballCircle = ball.getCurrentCircle();
 		if (playerBallCollisionPauseTime <= 0 && circleRectangleCollision(ballCircle, playerBox)) {
 			console.log("Player collides with the " + ball.color + " ball");
+
 			player.removeLife();
 
 			if (!player.isAlive) {
 				//isRunning = false;
-			    resetGame();
-			    player.reset();
-			    return;
+				player.playDieAnimation();
+				resetGame();
+				player.reset();
+				return;
 			}
 		}
 
@@ -125,7 +126,7 @@ function tick() {
 			}
 		});
 	});
-    
+
 	player.movement.right = !!input.right;
 	player.movement.left = !!input.left;
 
@@ -138,34 +139,34 @@ function tick() {
 
 	// update bonuses
 	bonuses = bonuses.filter(function (bonus) {
-	    return !bonus.destroy;
+		return !bonus.destroy;
 	});
 
 	bonuses.forEach(function (bonus) {
-	    var bonusBox = bonus.getCurrentBoundingBox();
-	    if (rectangleRectangleCollision(playerBox, bonusBox)) {
-	        switch (bonus.type) {
-	            case 1:
-	                hooksMaxCount++;
-	                console.log("max hooks " + hooksMaxCount);
-	                break;
+		var bonusBox = bonus.getCurrentBoundingBox();
+		if (rectangleRectangleCollision(playerBox, bonusBox)) {
+			switch (bonus.type) {
+				case 1:
+					hooksMaxCount++;
+					console.log("max hooks " + hooksMaxCount);
+					break;
 
-	            case 2:
-	                ballsMovementPauseTime += 2000;
-	                playerBallCollisionPauseTime += 2000;
-	                console.log("frozen time " + ballsMovementPauseTime);
-	                break;
+				case 2:
+					ballsMovementPauseTime += 2000;
+					playerBallCollisionPauseTime += 2000;
+					console.log("frozen time " + ballsMovementPauseTime);
+					break;
 
-	            default:
-	                playerBallCollisionPauseTime += 2000;
-	                console.log("invincibility " + playerBallCollisionPauseTime);
-	                break;
-	        }
+				default:
+					playerBallCollisionPauseTime += 2000;
+					console.log("invincibility " + playerBallCollisionPauseTime);
+					break;
+			}
 
-	        bonus.destroy = true;
-	    }
+			bonus.destroy = true;
+		}
 
-	    bonus.update();
+		bonus.update();
 	});
 }
 
@@ -176,16 +177,16 @@ function updateBallPosition(ball) {
 }
 
 function createHook(x) {
-    if (hooks.length < hooksMaxCount) {
+	if (hooks.length < hooksMaxCount) {
 		hooks.push(new Hook(x));
 		console.log("added hook");
 	}
 }
 
 function ballResponse(index) {
-    if (!balls[index]) {
-        return;
-    }
+	if (!balls[index]) {
+		return;
+	}
 
 	var color = balls[index].color;
 	switch (color) {
@@ -219,6 +220,7 @@ function resetBalls() {
 		ball.y = 100;
 	});
 }
+
 function run() {
 	handleInput();
 	if (isRunning) {
@@ -233,4 +235,5 @@ function run() {
 
 	requestAnimationFrame(run);
 }
+
 run();

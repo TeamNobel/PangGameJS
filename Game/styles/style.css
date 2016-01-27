@@ -3,7 +3,7 @@
     src: url(fonts/Bombing.ttf);
 }
 
-body{
+body {
     background-color: lightgrey;
 }
 
@@ -11,13 +11,13 @@ canvas {
     border: 2px solid black;
     display: block;
     margin: 0 auto;
-    background: url("../images/kydujkcydlcabrooumci.jpg") no-repeat;
+    background: url("../images/background.png") no-repeat;
     background-size: cover;
 }
 
-h1{
+h1 {
     margin: 30px;
-    font-family: Bombing;
+    font-family: Bombing, sans-serif;
     text-transform: uppercase;
     font-size: 100px;
     color: coral;
@@ -25,22 +25,22 @@ h1{
     text-align: center;
 }
 
-h2{
+h2 {
     text-align: center;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-section{
+section {
     display: inline-block;
     text-align: justify;
 }
 
-#right{
+#right {
     float: right;
 }
 
-#menu{
+#menu {
     width: 400px;
     margin: 30px auto;
     padding: 5px;
@@ -48,6 +48,6 @@ section{
     box-shadow: 10px 10px 5px #888888;
 }
 
-#wrapper{
+#wrapper {
     background-color: lightgrey;
 }
