@@ -6,11 +6,11 @@ function DrawHUD() {
 function DrawScore() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#b40d1e";
-    ctx.fillText("Score: " + player.score, 375, 30);
+    ctx.fillText("Score: " + player.score, 550, 30);
 }
 
 function DrawLives() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#b40d1e";
-    ctx.fillText("Lives: " + player.lives, 520, 30);
+    ctx.fillText("Lives: " + player.lives, 700, 30);
 }

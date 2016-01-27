@@ -51,6 +51,7 @@ function draw() {
 
 	tick();
 	player.render(ctx);
+	DrawHUD();
 }
 
 function tick() {
