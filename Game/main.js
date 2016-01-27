@@ -1,12 +1,12 @@
 var canvas = document.getElementById('canvas-main');
 var ctx = canvas.getContext('2d');
-var background = new Image();
-
-background.src = 'images/grass.jpg';
-
-background.onload = function () {
-	ctx.drawImage(background, 0, 0);
-};
+//var background = new Image();
+//
+//background.src = 'images/grass.jpg';
+//
+//background.onload = function () {
+//	ctx.drawImage(background, 0, 0);
+//};
 
 var input = new Input();
 attachListeners(input);
