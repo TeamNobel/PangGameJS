@@ -22,7 +22,7 @@ var balls = [
 
 var testRectangle = new Rectangle(200, 200, 100, 100);
 
-var rectangles = [];
+var hooks = [];
 
 var player = player = new Player(canvas.width / 2, canvas.height - 33);
 
@@ -55,7 +55,7 @@ function draw() {
 		//
 	});
 
-	rectangles.forEach(function (rectangle) {
+	hooks.forEach(function (rectangle) {
 		rectangle.draw()
 	});
 
@@ -70,6 +70,7 @@ function draw() {
 
 function tick() {
 
+	var playerBox = player.getCurrentBoundingBox();
 	balls.forEach(function (ball) {
 		checkForCanvasColide(ball);
 
@@ -79,6 +80,20 @@ function tick() {
 		if (ball.maxHeight > ball.y) {
 			ball.y = ball.maxHeight;
 		}
+
+		var ballCircle = ball.getCurrentCircle();
+		if (circleRectangleCollision(ballCircle, playerBox)) {
+			console.log("Player collides with the " + ball.color + " ball");
+		}
+
+		// check for collision with hooks
+		hooks.forEach(function (hook) {
+			if (ballHookCollision(ball, hook)) {
+				hook.destroy = true;
+				var index= balls.indexOf(ball);
+				ballResponse(index);
+			}
+		});
 	});
 
 
@@ -89,32 +104,10 @@ function tick() {
 	player.movement.right = !!input.right;
 	player.movement.left = !!input.left;
 
-	var playerBox = player.getCurrentBoundingBox();
-	balls.forEach(function (ball) {
-		var ballCircle = ball.getCurrentCircle();
-		if (circleRectangleCollision(ballCircle, playerBox)) {
-			console.log("Player collides with the " + ball.color + " ball");
-		}
-
-		// check for collision with hooks
-		rectangles.forEach(function (r) {
-			if (circleRectangleCollision(ballCircle, r)) {
-				if (ballCircle.radius > 11) {
-					balls.push(new Ball(new Circle(100, 50, ballCircle.radius / 2), ball.color));
-					balls.push(new Ball(new Circle(100, 50, ballCircle.radius / 2), ball.color));
-				}
-
-				balls.removeAt(ball);
-				//rectangles.removeAt(r);
-				r.destroy = true;
-			}
-		});
-	});
-
 	player.updateAnimationSettings();
 
 	// revome hooks that hit a ball or are outside the canvas
-	rectangles = rectangles.filter(function (r) {
+	hooks = hooks.filter(function (r) {
 		return !r.destroy;
 	});
 
@@ -132,10 +125,37 @@ function tick() {
 }
 
 function createHook(x) {
-	if (rectangles.length === 0) {
+	if (hooks.length === 0) {
 
-		rectangles.push(new Hook(x));
+		hooks.push(new Hook(x));
 		console.log("added hook");
+	}
+}
+
+function ballResponse(index){
+	var color = balls[index].color;
+	switch (color){
+		case 'gold':
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink'));
+			balls[balls.length-1].vx*=-1;
+			balls.removeAt(index);
+			break;
+		case 'pink':
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red'));
+			balls[balls.length-1].vx*=-1;
+			balls.removeAt(index);
+			break;
+		case 'red':
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue'));
+			balls[balls.length-1].vx*=-1;
+			balls.removeAt(index);
+			break;
+		default:
+			balls.removeAt(index);
+			break;
 	}
 }
 

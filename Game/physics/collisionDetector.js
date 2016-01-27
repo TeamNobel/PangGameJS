@@ -36,3 +36,7 @@ function rectangleRectangleCollision(rect1, rect2) {
 	rect1.x > rect2.x + rect2.width ||
 	rect1.y > rect2.y + rect2.height);
 }
+
+function ballHookCollision(ball, hook){
+	return !!(hook.x > ball.x - ball.radius && hook.x < ball.x + ball.radius && hook.y <= ball.y + ball.radius);
+}
