@@ -8,7 +8,7 @@ var Hook2 = function (x){
 
 Hook2.prototype.draw = function(ctx){
     ctx.drawImage(this.image, this.x, this. y);
-    this.y-=3;
+    this.y-=4;
 
-    this.destroy = (this.y < 0);
+    this.destroy = (this.y < 75);
 };
