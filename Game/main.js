@@ -9,7 +9,10 @@ var addedHook = false;
 var input = new Input();
 attachListeners(input);
 
-var balls = [new Ball(new Circle(100, 50, 45), 'gold', 6)];
+var startBalls = function () {
+	return [new Ball(new Circle(100, 50, 45), 'gold', 6)];
+};
+var balls = startBalls();
 var hooks = [];
 var bonuses = [];
 var player = new Player(canvas.width / 2, canvas.height - 33);
@@ -60,12 +63,12 @@ function tick() {
 		var ballCircle = ball.getCurrentCircle();
 		if (circleRectangleCollision(ballCircle, playerBox)) {
 			console.log("Player collides with the " + ball.color + " ball");
-			
 
 			player.removeLife();
 
 			if (!player.isAlive) {
-				isRunning = false;
+				//isRunning = false;
+				balls = startBalls();
 				player.reset();
 			}
 		}

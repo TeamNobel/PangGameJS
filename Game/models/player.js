@@ -1,4 +1,5 @@
 var Player = function Player(x, y) {
+	this.isAlive = true;
 	this.score = 0;
 	this.lives = 3;
 	this.position = new Vector2(x, y);
@@ -16,16 +17,18 @@ var Player = function Player(x, y) {
 };
 
 Player.prototype.reset = function() {
-	this.x = canvas.width / 2 - this.width / 2;
+	this.position.x = canvas.width / 2 - this.width / 2;
+	this.isAlive = true;
 }
 
 Player.prototype.removeLife = function() {
 	this.lives--;
+	this.isAlive = false;
 }
 
-Player.prototype.isAlive = function() {
-	return this.lives > 0;
-}
+//Player.prototype.isAlive = function() {
+//	return this.lives > 0;
+//}
 
 Player.prototype.getCurrentBoundingBox = function () {
 	return new Rectangle(this.position.x, this.position.y, this.width, this.height);
