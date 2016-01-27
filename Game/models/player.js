@@ -1,6 +1,8 @@
 var Player = function Player(x, y) {
+	this.score = 0;
+	this.lives = 3;
 	this.position = new Vector2(x, y);
-	this.velocity = 3;
+	this.velocity = 2;
 	this.width = 32;
 	this.height = 33;
 	this.row = 0;
@@ -12,6 +14,18 @@ var Player = function Player(x, y) {
 	this.animation = new Animation(this.width, this.height, this.row, this.col, this.numberOfFrames, 'sprites.png', 10, 23, 1);
 	this.boundingBox = new Rectangle(x, y, this.width, this.height);
 };
+
+Player.prototype.reset = function() {
+	this.x = canvas.width / 2 - this.width / 2;
+}
+
+Player.prototype.removeLife = function() {
+	this.lives--;
+}
+
+Player.prototype.isAlive = function() {
+	return this.lives > 0;
+}
 
 Player.prototype.getCurrentBoundingBox = function () {
 	return new Rectangle(this.position.x, this.position.y, this.width, this.height);
