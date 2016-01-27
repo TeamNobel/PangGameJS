@@ -43,16 +43,18 @@ function draw() {
 
 	tick();
 	player.render(ctx);
-	window.requestAnimationFrame(draw);
+	//window.requestAnimationFrame(draw);
 }
 
 function tick() {
 
 	var playerBox = player.getCurrentBoundingBox();
+	
 	balls.forEach(function (ball) {
 		checkForCanvasCollision(ball);
-		updateBallPosition(ball);
-
+		if (player.isAlive){
+			updateBallPosition(ball);
+		}
 		var ballCircle = ball.getCurrentCircle();
 		if (circleRectangleCollision(ballCircle, playerBox)) {
 			console.log("Player collides with the " + ball.color + " ball");
@@ -60,7 +62,7 @@ function tick() {
 
 			player.removeLife();
 
-			if (!player.isAlive()) {
+			if (!player.isAlive) {
 				isRunning = false;
 				player.reset();
 			}
@@ -153,3 +155,12 @@ function resetBalls() {
 		ball.y = 100;
 	});
 }
+function run () {
+	if (isRunning) {
+		draw();
+		tick();
+	}
+
+	requestAnimationFrame(run);
+}
+run();
