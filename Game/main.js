@@ -21,7 +21,7 @@ var bonuses = [];
 var player = new Player(canvas.width / 2, canvas.height - 33);
 var sound = new Audio('sounds/pop.wav');
 var backgroundSound = new Audio('sounds/background-blade.mp3');
-backgroundSound.play();
+
 var isRunning = false;
 
 
@@ -169,6 +169,7 @@ function run() {
 	} else {
 		if (input.enter) {
 			isRunning = true;
+			backgroundSound.play();
 		}
 	}
 
