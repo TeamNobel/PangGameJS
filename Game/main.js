@@ -1,40 +1,27 @@
-var canvas = document.getElementById('canvas-main'),
-	ctx = canvas.getContext('2d'),
-	raf,
-	background = new Image();
-
-background.src = 'grass.jpg';
+var canvas = document.getElementById('canvas-main');
+var ctx = canvas.getContext('2d');
+var background = new Image();
+	background.src = 'grass.jpg';
 background.onload = function () {
 	ctx.drawImage(background, 0, 0);
 };
-
 var addedHook = false;
-
 var input = new Input();
-attachListeners(input);
+	attachListeners(input);
 
-var balls = [
-	
-	new Ball(new Circle(100, 50, 45), 'gold', 6)
-];
-
-var testRectangle = new Rectangle(200, 200, 100, 100);
-
+var balls = [new Ball(new Circle(100, 50, 45), 'gold', 6)];
 var hooks = [];
-
-var player = player = new Player(canvas.width / 2, canvas.height - 33);
-
-var bonuses = [new Bonus(5, 5, 1)];
-
+var bonuses = [];
+var player = new Player(canvas.width / 2, canvas.height - 33);
 var sound = new Audio('sounds/pop.wav');
+var isRunning = true;
+
 
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	var playerBox = player.getCurrentBoundingBox();
 	ctx.strokeRect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
-
-	ctx.strokeRect(testRectangle.x, testRectangle.y, testRectangle.width, testRectangle.height);
 
 	balls.forEach(function (ball) {
 		ball.draw(ctx);
@@ -69,6 +56,14 @@ function tick() {
 		var ballCircle = ball.getCurrentCircle();
 		if (circleRectangleCollision(ballCircle, playerBox)) {
 			console.log("Player collides with the " + ball.color + " ball");
+			
+
+			player.removeLife();
+
+			if (!player.isAlive()) {
+				isRunning = false;
+				player.reset();
+			}
 		}
 
 		// check for collision with hooks
@@ -76,6 +71,9 @@ function tick() {
 			if (ballHookCollision(ball, hook)) {
 				sound.play();
 				hook.destroy = true;
+				player.score += 100;
+				console.log(player.score);
+
 				var index= balls.indexOf(ball);
 				ballResponse(index);
 			}
@@ -104,10 +102,6 @@ function tick() {
 	bonuses.forEach(function (bonus) {
 		bonus.update();
 	});
-
-	if (rectangleRectangleCollision(playerBox, testRectangle)) {
-		console.log("Player collides with rectangle.");
-	}
 }
 
 function updateBallPosition(ball){
@@ -121,7 +115,6 @@ function updateBallPosition(ball){
 
 function createHook(x) {
 	if (hooks.length === 0) {
-
 		hooks.push(new Hook(x));
 		console.log("added hook");
 	}
@@ -154,25 +147,9 @@ function ballResponse(index){
 	}
 }
 
-//function update() {
-//	this.tick();
-//	this.render(ctx);
-//	requestAnimationFrame(update);
-//}
-
-//function changeDirection(ball, rect) {
-//    if (ball.y + ball.radius === rect.y || ball.y - ball.radius === rect.y + rect.height) {
-//        ball.vy *= -1;
-//    } else if (ball.x + ball.radius === rect.x || ball.x - ball.radius === rect.x + rect.width) {
-//        ball.vx *= -1;
-//    } else {
-//        if (ball.y >= rect.y && ball.y <= rect.y + rect.height) {
-//            ball.vx *= -1;
-//        } else if (ball.x >= rect.x && ball.x <= rect.x + rect.width) {
-//            ball.vy *= -1;
-//        } else {
-//            ball.vy *= -1;
-//            ball.vx *= -1;
-//        }
-//    }
-//}
+function resetBalls() {
+	balls.forEach(function(ball){
+		ball.x = 100;
+		ball.y = 100;
+	});
+}
