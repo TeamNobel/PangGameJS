@@ -35,8 +35,8 @@ function draw() {
 		//
 	});
 
-	hooks.forEach(function (rectangle) {
-		rectangle.draw()
+	hooks.forEach(function (hook) {
+		hook.draw(ctx);
 	});
 
 	bonuses.forEach(function (bonus) {
@@ -112,14 +112,11 @@ function updateBallPosition(ball){
 	ball.x += ball.vx;
 	ball.y += ball.vy;
 	ball.vy += 0.1;
-	//if (ball.maxHeight > ball.y&&ball.vy<0) {
-	//	ball.y = ball.maxHeight;
-	//}
 }
 
 function createHook(x) {
 	if (hooks.length === 0) {
-		hooks.push(new Hook(x));
+		hooks.push(new Hook2(x));
 		console.log("added hook");
 	}
 }
