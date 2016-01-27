@@ -1,7 +1,7 @@
 var spawnedHook = false;
 
 function handleInput() {
-    if (input.space && !spawnedHook) {
+	if (input.space && !spawnedHook) {
 		createHook(player.position.x + player.width / 2);
 	}
 	spawnedHook = input.space;

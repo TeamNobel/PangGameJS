@@ -16,12 +16,12 @@ var Player = function Player(x, y) {
 	this.boundingBox = new Rectangle(x, y, this.width, this.height);
 };
 
-Player.prototype.reset = function() {
+Player.prototype.reset = function () {
 	this.position.x = canvas.width / 2 - this.width / 2;
 	this.isAlive = true;
 };
 
-Player.prototype.removeLife = function() {
+Player.prototype.removeLife = function () {
 	this.lives--;
 	this.isAlive = false;
 };
@@ -73,4 +73,9 @@ Player.prototype.updateAnimationSettings = function () {
 	}
 
 	this.update();
+};
+
+Player.prototype.playDieAnimation = function () {
+	this.animation.setColumn(17);
+	this.animation.setLimit(3);
 };

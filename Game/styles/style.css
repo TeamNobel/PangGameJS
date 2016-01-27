@@ -4,6 +4,6 @@ canvas {
     position: absolute;
     right: 0;
     left: 0;
-    background: url("../images/grass.jpg") no-repeat;
+    background: url("../images/background.png") no-repeat;
     background-size: cover;
 }
