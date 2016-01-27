@@ -1,19 +1,14 @@
-var Hook = function (x) {
-	this.x = x;
-	this.y = canvas.height;
-	this.height = 0;
-	this.width = 3;
-	this.destroy = false;
-	this.draw = function () {
-		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.width, this.height);
-		ctx.fillStyle = "silver";
-		ctx.fill();
-		ctx.closePath();
+var Hook = function (x){
+    this.x = x;
+    this.y = canvas.height;
+    this.destroy = false;
+    this.image = new Image();
+    this.image.src = 'images/pang3.png';
+};
 
-		this.y -= 4;
-		this.height += 4;
+Hook.prototype.draw = function(ctx){
+    ctx.drawImage(this.image, this.x, this. y);
+    this.y-=4;
 
-		this.destroy = (this.y < 0);
-	}
+    this.destroy = (this.y < 75);
 };

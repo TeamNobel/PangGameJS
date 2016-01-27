@@ -12,7 +12,7 @@ var Player = function Player(x, y) {
 	this.movement = {left: false, right: false};
 	this.isSetLeftAnimation = false;
 	this.isSetRightAnimation = false;
-	this.animation = new Animation(this.width, this.height, this.row, this.col, this.numberOfFrames, 'sprites.png', 10, 23, 1);
+	this.animation = new Animation(this.width, this.height, this.row, this.col, this.numberOfFrames, 'images/sprites.png', 10, 23, 1);
 	this.boundingBox = new Rectangle(x, y, this.width, this.height);
 };
 

@@ -2,13 +2,12 @@ var canvas = document.getElementById('canvas-main');
 var ctx = canvas.getContext('2d');
 var background = new Image();
 
-background.src = 'grass.jpg';
+background.src = 'images/grass.jpg';
 
 background.onload = function () {
 	ctx.drawImage(background, 0, 0);
 };
 
-var addedHook = false;
 var input = new Input();
 attachListeners(input);
 
@@ -29,16 +28,9 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	var playerBox = player.getCurrentBoundingBox();
-	ctx.strokeRect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
 
 	balls.forEach(function (ball) {
 		ball.draw(ctx);
-
-		//draw boxes around balls and player
-		var ballCircle = ball.getCurrentCircle();
-		ctx.arc(ballCircle.x, ballCircle.y, ballCircle.radius, 0, 0, true);
-		ctx.stroke();
-		//
 	});
 
 	hooks.forEach(function (hook) {
@@ -124,7 +116,7 @@ function updateBallPosition(ball) {
 
 function createHook(x) {
 	if (hooks.length === 0) {
-		hooks.push(new Hook2(x));
+		hooks.push(new Hook(x));
 		console.log("added hook");
 	}
 }
