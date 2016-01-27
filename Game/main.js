@@ -127,6 +127,8 @@ function tick() {
 				player.score += 100;
 				console.log(player.score);
 
+				tryToSpawnBonus(ball.x, ball.y);
+
 				var index = balls.indexOf(ball);
 				ballResponse(index);
 			}

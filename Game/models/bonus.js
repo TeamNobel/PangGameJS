@@ -12,7 +12,7 @@ var Bonus = function (x, y, type) {
         this.row + this.type, // needs to be fixed
         this.col,
         this.numberOfFrames,
-        'sprites.png',
+        'images/sprites.png',
         10,
         23, 1);
 }
