@@ -14,9 +14,7 @@ var input = new Input();
 attachListeners(input);
 
 var balls = [
-	new Ball(new Circle(10, 250, 6), 'blue'),
-	new Ball(new Circle(500, 150, 15), 'red'),
-	new Ball(new Circle(100, 100, 30), 'pink'),
+	
 	new Ball(new Circle(100, 50, 45), 'gold')
 ];
 
@@ -27,6 +25,8 @@ var hooks = [];
 var player = player = new Player(canvas.width / 2, canvas.height - 33);
 
 var bonuses = [new Bonus(5, 5, 1)];
+
+var sound = new Audio('sounds/pop.wav');
 
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -74,6 +74,7 @@ function tick() {
 		// check for collision with hooks
 		hooks.forEach(function (hook) {
 			if (ballHookCollision(ball, hook)) {
+				sound.play();
 				hook.destroy = true;
 				var index= balls.indexOf(ball);
 				ballResponse(index);
