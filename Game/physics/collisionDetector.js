@@ -22,6 +22,15 @@ function circleRectangleCollision(circle, rectangle) {
 	return (cornerDistance_sq <= Math.pow(circle.radius, 2));
 }
 
+function checkForCanvasCollision(ball) {
+	if (ball.y > canvas.height - ball.radius || ball.y < ball.radius) {
+		ball.vy = -ball.vy;
+	}
+	if (ball.x > canvas.width - ball.radius || ball.x < ball.radius) {
+		ball.vx = -ball.vx;
+	}
+}
+
 function circleCircleCollision(circle1, circle2) {
 	return Math.pow((circle2.x - circle1.x), 2) +
 		Math.pow((circle1.y - circle2.y), 2) <=

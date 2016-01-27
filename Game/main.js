@@ -28,15 +28,6 @@ var player = player = new Player(canvas.width / 2, canvas.height - 33);
 
 var bonuses = [new Bonus(5, 5, 1)];
 
-function checkForCanvasColide(ball) {
-	if (ball.y > canvas.height - ball.radius || ball.y < ball.radius) {
-		ball.vy = -ball.vy;
-	}
-	if (ball.x > canvas.width - ball.radius || ball.x < ball.radius) {
-		ball.vx = -ball.vx;
-	}
-}
-
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -72,14 +63,8 @@ function tick() {
 
 	var playerBox = player.getCurrentBoundingBox();
 	balls.forEach(function (ball) {
-		checkForCanvasColide(ball);
-
-		ball.x += ball.vx;
-		ball.y += ball.vy;
-		ball.vy += 0.1;
-		if (ball.maxHeight > ball.y) {
-			ball.y = ball.maxHeight;
-		}
+		checkForCanvasCollision(ball);
+		updateBallPosition(ball);
 
 		var ballCircle = ball.getCurrentCircle();
 		if (circleRectangleCollision(ballCircle, playerBox)) {
@@ -121,6 +106,15 @@ function tick() {
 
 	if (rectangleRectangleCollision(playerBox, testRectangle)) {
 		console.log("Player collides with rectangle.");
+	}
+}
+
+function updateBallPosition(ball){
+	ball.x += ball.vx;
+	ball.y += ball.vy;
+	ball.vy += 0.1;
+	if (ball.maxHeight > ball.y) {
+		ball.y = ball.maxHeight;
 	}
 }
 
