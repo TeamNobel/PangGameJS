@@ -13,20 +13,12 @@ var addedHook = false;
 var input = new Input();
 attachListeners(input);
 
-var balls = [
-	new Ball(new Circle(10, 250, 6), 'blue'),
-	new Ball(new Circle(500, 150, 15), 'red'),
-	new Ball(new Circle(100, 100, 30), 'pink'),
-	new Ball(new Circle(100, 50, 45), 'gold')
-];
-
-var testRectangle = new Rectangle(200, 200, 100, 100);
-
-var hooks = [];
-
-var player = player = new Player(canvas.width / 2, canvas.height - 33);
-
-var bonuses = [new Bonus(5, 5, 1)];
+var balls = [new Ball(new Circle(100, 100, 45), 'gold', 6.5)],
+	hooks = [],
+	player = player = new Player(canvas.width / 2, canvas.height - 33),
+	testRectangle = new Rectangle(200, 200, 100, 100),
+	hooks = [],
+	bonuses = [new Bonus(5, 5, 1)];
 
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -113,9 +105,9 @@ function updateBallPosition(ball){
 	ball.x += ball.vx;
 	ball.y += ball.vy;
 	ball.vy += 0.1;
-	if (ball.maxHeight > ball.y) {
-		ball.y = ball.maxHeight;
-	}
+	//if (ball.maxHeight > ball.y&&ball.vy<0) {
+	//	ball.y = ball.maxHeight;
+	//}
 }
 
 function createHook(x) {
@@ -130,20 +122,20 @@ function ballResponse(index){
 	var color = balls[index].color;
 	switch (color){
 		case 'gold':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink'));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink', 6));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink', 6));
 			balls[balls.length-1].vx*=-1;
 			balls.removeAt(index);
 			break;
 		case 'pink':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red'));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red', 5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red', 5));
 			balls[balls.length-1].vx*=-1;
 			balls.removeAt(index);
 			break;
 		case 'red':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue'));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue', 3.5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue', 3.5));
 			balls[balls.length-1].vx*=-1;
 			balls.removeAt(index);
 			break;
