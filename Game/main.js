@@ -1,10 +1,13 @@
 var canvas = document.getElementById('canvas-main');
 var ctx = canvas.getContext('2d');
 var background = new Image();
+
 background.src = 'grass.jpg';
+
 background.onload = function () {
 	ctx.drawImage(background, 0, 0);
 };
+
 var addedHook = false;
 var input = new Input();
 attachListeners(input);
@@ -19,7 +22,7 @@ var player = new Player(canvas.width / 2, canvas.height - 33);
 var sound = new Audio('sounds/pop.wav');
 var backgroundSound = new Audio('sounds/background-blade.mp3');
 backgroundSound.play();
-var isRunning = true;
+var isRunning = false;
 
 
 function draw() {
@@ -48,7 +51,6 @@ function draw() {
 
 	tick();
 	player.render(ctx);
-	//window.requestAnimationFrame(draw);
 }
 
 function tick() {
@@ -57,34 +59,35 @@ function tick() {
 	
 	balls.forEach(function (ball) {
 		checkForCanvasCollision(ball);
-		if (player.isAlive){
+		
+		if (player.isAlive) {
 			updateBallPosition(ball);
 		}
 		var ballCircle = ball.getCurrentCircle();
 		if (circleRectangleCollision(ballCircle, playerBox)) {
 			console.log("Player collides with the " + ball.color + " ball");
 
-			player.removeLife();
 
 			if (!player.isAlive) {
 				//isRunning = false;
 				balls = startBalls();
 				player.reset();
 			}
+
+		
+			// check for collision with hooks
+			hooks.forEach(function (hook) {
+				if (ballHookCollision(ball, hook)) {
+					sound.play();
+					hook.destroy = true;
+					player.score += 100;
+					console.log(player.score);
+
+					var index= balls.indexOf(ball);
+					ballResponse(index);
+				}
+			});
 		}
-
-		// check for collision with hooks
-		hooks.forEach(function (hook) {
-			if (ballHookCollision(ball, hook)) {
-				sound.play();
-				hook.destroy = true;
-				player.score += 100;
-				console.log(player.score);
-
-				var index= balls.indexOf(ball);
-				ballResponse(index);
-			}
-		});
 	});
 
 
@@ -106,6 +109,7 @@ function tick() {
 	bonuses = bonuses.filter(function (b) {
 		return !b.destroy;
 	});
+	
 	bonuses.forEach(function (bonus) {
 		bonus.update();
 	});
@@ -115,9 +119,7 @@ function updateBallPosition(ball){
 	ball.x += ball.vx;
 	ball.y += ball.vy;
 	ball.vy += 0.1;
-	//if (ball.maxHeight > ball.y&&ball.vy<0) {
-	//	ball.y = ball.maxHeight;
-	//}
+	
 }
 
 function createHook(x) {
@@ -164,6 +166,10 @@ function run () {
 	if (isRunning) {
 		draw();
 		tick();
+	} else {
+		if(input.enter){
+			isRunning = true;
+		}
 	}
 
 	requestAnimationFrame(run);
