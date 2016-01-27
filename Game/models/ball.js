@@ -1,7 +1,7 @@
 var Ball = function (circle, color, baseVy) {
 	this.x = circle.x;
 	this.y = circle.y;
-	this.vx = 2;
+	this.vx = 1.5;
 	this.vy = 0;
 	this.radius = circle.radius;
 	this.color = color;
