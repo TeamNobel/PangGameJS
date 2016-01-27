@@ -17,6 +17,7 @@ var Player = function Player(x, y) {
 
 Player.prototype.reset = function() {
 	this.x = canvas.width / 2 - this.width / 2;
+	this.isAlive = true;
 }
 
 Player.prototype.removeLife = function() {
