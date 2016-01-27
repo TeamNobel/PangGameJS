@@ -163,6 +163,7 @@ function resetBalls() {
 	});
 }
 function run() {
+	handleInput();
 	if (isRunning) {
 		draw();
 		tick();
