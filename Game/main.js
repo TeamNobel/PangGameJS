@@ -15,7 +15,7 @@ attachListeners(input);
 
 var balls = [
 	
-	new Ball(new Circle(100, 50, 45), 'gold')
+	new Ball(new Circle(100, 50, 45), 'gold', 6)
 ];
 
 var testRectangle = new Rectangle(200, 200, 100, 100);
