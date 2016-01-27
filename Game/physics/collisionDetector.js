@@ -24,7 +24,7 @@ function circleRectangleCollision(circle, rectangle) {
 
 function checkForCanvasCollision(ball) {
 	if (ball.y > canvas.height - ball.radius || ball.y < ball.radius) {
-		ball.vy = -ball.vy;
+		ball.vy = -ball.baseVy;
 	}
 	if (ball.x > canvas.width - ball.radius || ball.x < ball.radius) {
 		ball.vx = -ball.vx;

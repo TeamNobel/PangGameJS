@@ -1,12 +1,11 @@
-var Ball = function (circle, color) {
+var Ball = function (circle, color, baseVy) {
 	this.x = circle.x;
 	this.y = circle.y;
-	this.maxHeight = circle.y;
 	this.vx = 2;
 	this.vy = 0;
-	//this.mass = Math.round(circle.radius * circle.radius * Math.PI);
 	this.radius = circle.radius;
 	this.color = color;
+	this.baseVy = baseVy; //Controls max height of the ball
 };
 
 Ball.prototype.getCurrentCircle = function (){

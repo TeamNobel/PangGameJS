@@ -114,9 +114,9 @@ function updateBallPosition(ball){
 	ball.x += ball.vx;
 	ball.y += ball.vy;
 	ball.vy += 0.1;
-	if (ball.maxHeight > ball.y) {
-		ball.y = ball.maxHeight;
-	}
+	//if (ball.maxHeight > ball.y&&ball.vy<0) {
+	//	ball.y = ball.maxHeight;
+	//}
 }
 
 function createHook(x) {
@@ -131,20 +131,20 @@ function ballResponse(index){
 	var color = balls[index].color;
 	switch (color){
 		case 'gold':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink'));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink', 6));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,30), 'pink', 6));
 			balls[balls.length-1].vx*=-1;
 			balls.removeAt(index);
 			break;
 		case 'pink':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red'));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red', 5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,15), 'red', 5));
 			balls[balls.length-1].vx*=-1;
 			balls.removeAt(index);
 			break;
 		case 'red':
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue'));
-			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue'));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue', 3.5));
+			balls.push(new Ball(new Circle(balls[index].x, balls[index].y,6), 'blue', 3.5));
 			balls[balls.length-1].vx*=-1;
 			balls.removeAt(index);
 			break;
