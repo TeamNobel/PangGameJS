@@ -3,11 +3,15 @@
     src: url(fonts/Bombing.ttf);
 }
 
+body{
+    background-color: lightgrey;
+}
+
 canvas {
     border: 2px solid black;
     display: block;
     margin: 0 auto;
-    background: url("../images/grass.jpg") no-repeat;
+    background: url("../images/kydujkcydlcabrooumci.jpg") no-repeat;
     background-size: cover;
 }
 
@@ -19,4 +23,30 @@ h1{
     color: coral;
     letter-spacing: 10px;
     text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+section{
+    display: inline-block;
+    text-align: justify;
+}
+
+#left{
+    float: left;
+}
+
+#right{
+    float: right;
+}
+
+#menu{
+    width: 400px;
+    margin: 0 auto;
+}
+
+#wrapper{
+    background-color: lightgrey;
 }
